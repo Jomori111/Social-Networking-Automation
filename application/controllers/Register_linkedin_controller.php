@@ -30,7 +30,20 @@ class Register_linkedin_controller extends CI_Controller {
 		        ],
 		    ]);
 		    $data = json_decode($response->getBody()->getContents(), true);
-		    $access_token = $data['access_token']; 
+
+		    // $client = new Client(['base_uri' => 'https://www.linkedin.com']);
+		    // $response = $client->request('POST', '/oauth/v2/accessToken', [
+		    //     'form_params' => [
+		    //             "grant_type" => "refresh_token",
+		    //             "refresh_token" => $data['access_token'],
+		    //             "client_id" => LINKEDIN_CLIENT_ID,
+		    //             "client_secret" => LINKEDIN_CLIENT_SECRET
+		    //     ],
+		    // ]);
+		    // $data = json_decode($response->getBody()->getContents(), true);
+
+		    // print_r($data);
+		    // $access_token = $data['access_token']; 
 
 		    $data = $this->General_m->save_company_linkedin_info($access_token,$data['expires_in']);
 

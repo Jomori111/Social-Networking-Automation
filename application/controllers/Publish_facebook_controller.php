@@ -85,6 +85,6 @@ class Publish_facebook_controller extends CI_Controller {
 			 echo $response;
 			}
 
-		 }
+		}
 	}
 }

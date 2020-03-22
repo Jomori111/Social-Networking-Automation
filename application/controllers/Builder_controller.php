@@ -103,12 +103,13 @@ class Builder_controller extends CI_Controller {
 		$nick = $this->input->post("nick");
 		$addon_message = $this->input->post("addon_message");
 		$hash = $this->input->post("hash");
-
+		
 		$data['save']= $this->General_m->save_post($company,$image,$message,$link,$nick,$addon_message,$hash);
 
 		$this->load->helper("publish");
-		$data['twitter'] = publish_to_twitter();
-		$data['facebook'] = publish_to_facebook();
+		// $data['twitter'] = publish_to_twitter();
+		// $data['facebook'] = publish_to_facebook();
+		$data['linkedin'] = publish_to_linkedin();
 		
 		$data = json_encode($data);
 		echo $data;

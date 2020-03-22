@@ -206,7 +206,7 @@ $(document).ready(function(){
 
     $("#save_post").on("click",function(){
     	$("#save_post").attr("disabled", true);
-
+        
     	var company = $("#result_company").val();
     	var image = $("#result_image").val();
     	var message = "";

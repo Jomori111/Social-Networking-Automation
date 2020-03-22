@@ -15,40 +15,42 @@ class Register_instagram_controller extends CI_Controller {
 
 	public function index()
 	{
-		// if(!isset($_GET['code'])){
-		// 	exit;
-		// }
+		if(!isset($_GET['code'])){
+			exit;
+		}
 
-		// $settings = array(
-		// 	"clientID" => INSTAGRAM_APP_ID,
-		// 	"clientSecret" => INSTAGRAM_APP_SECRET,
-		// 	"redirectURI" => INSTAGRAM_REDIRECT_URI,
-		// );
+		$postCommentEndpoint = 'https://api.instagram.com/oauth/access_token';
+		$postCommentIgParams = array(
+			'client_id' => INSTAGRAM_APP_ID,
+			'client_secret' => INSTAGRAM_APP_SECRET,
+			'grant_type' => 'authorization_code',
+			'redirect_uri' => 'https://localhost/blog/Register_instagram_controller',
+			'code' => $_GET['code']
+		);
+		$postCommentResponseArray = $this->makeApiCall( $postCommentEndpoint, 'POST', $postCommentIgParams );
+		echo '<pre>';
 
-		// $Instagram = new InstagramAPI($settings);
+		$user_id = $postCommentResponseArray['user_id'];
+		$token = $postCommentResponseArray['access_token'];
 
-		// $data = $Instagram->getAccessTokenAndUserDetails($_GET['code']);
+		$postCommentEndpoint = 'https://graph.instagram.com/access_token';
+		$postCommentIgParams = array(
+			'grant_type' => 'ig_exchange_token',
+			'client_secret' => INSTAGRAM_APP_SECRET,
+			'access_token' => $token
+		);
+		$postCommentResponseArray = $this->makeApiCall( $postCommentEndpoint, 'GET', $postCommentIgParams );
 
-		// $access_token = "";
-		// $params = array(
-		// 	'get_code' => isset( $_GET['code'] ) ? $_GET['code'] : '',
-		// );
 
-		// $ig = new instagram_basic_display_api($params);
-		// if($ig->hasUserAccessToken)
-		// {
-		// 	$access_token = $ig->getUserAccessToken();
-		// }
+		$postCommentEndpoint = 'https://graph.facebook.com/'.$user_id.'/media';
+		$postCommentIgParams = array(
+			'image_url' => 'https://modernevites.com/assets/img/main_logo.png',
+			'caption' => 'apple'
+		);
 
-		// $postCommentEndpoint = ENDPOINT_BASE.INSTAGRAM_APP_ID.'/comments';
-		// $postCommentIgParams = array(
-		// 	'message' => 'Commenting from IG Graph API!! :)',
-		// 	'access_token' => $access_token
-		// );
-		// $postCommentResponseArray = $this->makeApiCall( $postCommentEndpoint, 'POST', $postCommentIgParams );
-		// echo '<pre>';
+		$postCommentResponseArray = $this->makeApiCall( $postCommentEndpoint, 'POST', $postCommentIgParams );
 
-		// die(print_r($postCommentResponseArray));
+		die(print_r($postCommentResponseArray));
 	}
 
 	public function makeApiCall( $endpoint, $type, $params ) {
