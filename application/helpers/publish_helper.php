@@ -182,7 +182,7 @@
 		} catch(Exception $e) {
 		    echo $e->getMessage();
 		}
-
+		
 
 		$link = 'https://modernevites.com';
 		$linkedin_id = $linkedin_profile_id;
