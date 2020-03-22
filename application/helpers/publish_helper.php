@@ -183,25 +183,6 @@
 		    echo $e->getMessage();
 		}
 
-		try {
-		    $client = new Client(['base_uri' => 'https://api.linkedin.com']);
-		    $response = $client->request('POST', '/v2/shares', [
-		        'headers' => [
-		            "Authorization" => "Bearer " . $access_token,
-		            "Content-Type"  => "application/json",
-		            "x-li-format"   => "json"
-		        ],
-		        'body' => $body_json,
-		    ]);
-		 	
-		    if ($response->getStatusCode() !== 201) {
-		        echo 'Error: '. $response->getLastBody()->errors[0]->message;
-		    }
-		 
-		    echo 'Post is shared on LinkedIn successfully';
-		} catch(Exception $e) {
-		    echo $e->getMessage(). ' for link '. $link;
-		}
 
 		$link = 'https://modernevites.com';
 		$linkedin_id = $linkedin_profile_id;
